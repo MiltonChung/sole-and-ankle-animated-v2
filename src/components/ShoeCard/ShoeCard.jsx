@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled, { keyframes } from "styled-components";
 
-import { WEIGHTS } from '../../constants';
-import { formatPrice, pluralize, isNewShoe } from '../../utils';
-import Spacer from '../Spacer';
+import { WEIGHTS } from "../../constants";
+import { formatPrice, pluralize, isNewShoe } from "../../utils";
+import Spacer from "../Spacer";
 
 const ShoeCard = ({
   slug,
@@ -37,29 +37,25 @@ const ShoeCard = ({
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
-        {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
-        {variant === 'new-release' && (
-          <NewFlag>Just released!</NewFlag>
-        )}
+        {variant === "on-sale" && <SaleFlag>Sale</SaleFlag>}
+        {variant === "new-release" && <NewFlag>Just released!</NewFlag>}
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
           <Price
             style={{
-              '--color':
-                variant === 'on-sale'
-                  ? 'var(--color-gray-700)'
-                  : undefined,
-              '--text-decoration':
-                variant === 'on-sale' ? 'line-through' : undefined,
+              "--color":
+                variant === "on-sale" ? "var(--color-gray-700)" : undefined,
+              "--text-decoration":
+                variant === "on-sale" ? "line-through" : undefined,
             }}
           >
             {formatPrice(price)}
           </Price>
         </Row>
         <Row>
-          <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
-          {variant === 'on-sale' ? (
+          <ColorInfo>{pluralize("Color", numOfColors)}</ColorInfo>
+          {variant === "on-sale" ? (
             <SalePrice>{formatPrice(salePrice)}</SalePrice>
           ) : undefined}
         </Row>
@@ -82,13 +78,6 @@ const ImageWrapper = styled.div`
   overflow: hidden;
   border-radius: 16px 16px 4px 4px;
   line-height: 0;
-
-  @media (prefers-reduced-motion: no-preference) {
-    &:hover img {
-      transform: scale(1.1);
-      transition: transform 200ms;
-    }
-  }
 `;
 
 const Image = styled.img`
@@ -96,6 +85,14 @@ const Image = styled.img`
   border-radius: 16px 16px 4px 4px;
   transition: transform 500ms;
   transform-origin: center bottom;
+
+  @media (prefers-reduced-motion: no-preference) {
+    ${Link}:hover &,
+    ${Link}:focus & {
+      transform: scale(1.1);
+      transition: transform 200ms;
+    }
+  }
 `;
 
 const Row = styled.div`
@@ -123,6 +120,16 @@ const SalePrice = styled.span`
   color: var(--color-primary);
 `;
 
+const bounce = keyframes`
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(2px);
+  }
+`;
+
 const Flag = styled.div`
   position: absolute;
   top: 12px;
@@ -135,6 +142,14 @@ const Flag = styled.div`
   font-weight: ${WEIGHTS.bold};
   color: var(--color-white);
   border-radius: 2px;
+
+  @media (prefers-reduced-motion: no-preference) {
+    ${Link}:hover &,
+    ${Link}:focus & {
+      animation: ${bounce} 300ms alternate;
+      animation-iteration-count: 4;
+    }
+  }
 `;
 
 const SaleFlag = styled(Flag)`

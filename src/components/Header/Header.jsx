@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { QUERIES, WEIGHTS } from '../../constants';
-import Logo from '../Logo';
-import Icon from '../Icon';
-import UnstyledButton from '../UnstyledButton';
-import SuperHeader from '../SuperHeader';
-import MobileMenu from '../MobileMenu';
-import VisuallyHidden from '../VisuallyHidden';
+import { QUERIES, WEIGHTS } from "../../constants";
+import Logo from "../Logo";
+import Icon from "../Icon";
+import UnstyledButton from "../UnstyledButton";
+import SuperHeader from "../SuperHeader";
+import MobileMenu from "../MobileMenu";
+import VisuallyHidden from "../VisuallyHidden";
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
@@ -19,14 +19,34 @@ const Header = () => {
         <LogoWrapper>
           <Logo />
         </LogoWrapper>
+
         <DesktopNav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          <NavLink href="/sale">
+            <MainText>Sale</MainText>
+            <HoverText>Sale</HoverText>
+          </NavLink>
+          <NavLink href="/new">
+            <MainText>New&nbsp;Releases</MainText>
+            <HoverText>New&nbsp;Releases</HoverText>
+          </NavLink>
+          <NavLink href="/men">
+            <MainText>Men</MainText>
+            <HoverText>Men</HoverText>
+          </NavLink>
+          <NavLink href="/women">
+            <MainText>Women</MainText>
+            <HoverText>Women</HoverText>
+          </NavLink>
+          <NavLink href="/kids">
+            <MainText>Kids</MainText>
+            <HoverText>Kids</HoverText>
+          </NavLink>
+          <NavLink href="/collections">
+            <MainText>Collections</MainText>
+            <HoverText>Collections</HoverText>
+          </NavLink>
         </DesktopNav>
+
         <MobileActions>
           <ShoppingBagButton>
             <Icon id="shopping-bag" />
@@ -114,15 +134,39 @@ const Filler = styled.div`
   }
 `;
 
+const MainText = styled.div`
+  transition: transform 200ms;
+`;
+
+const HoverText = styled.div`
+  font-weight: ${WEIGHTS.bold};
+  position: absolute;
+  top: 0;
+  transition: transform 300ms;
+  transform: translateY(100%);
+`;
+
 const NavLink = styled.a`
   font-size: 1.125rem;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--color-gray-900);
   font-weight: ${WEIGHTS.medium};
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
 
   &:first-of-type {
     color: var(--color-secondary);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    &:hover ${MainText} {
+      transform: translateY(-100%);
+    }
+    &:hover ${HoverText} {
+      transform: translateY(0%);
+    }
   }
 `;
 
